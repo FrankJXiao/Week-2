@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSC 441 Lab 2</title>
+  </head>
+  <body>
+    <section id="task-1"></section>
+    
+    <section id="task-2">
+      <button id="number">Click to Enter a Number</button>
+    </section>
+    
+    <section id="task-3">
+      <input type="button" value="Click me!" onclick="clickHandler()" />
+      <div id="output"></div>
+    </section>
+    
+    <section id="task-4">
+      <fieldset>
+        <legend>Select a Color</legend>
+        <input type="radio" id="red" name="color" value="red">
+        <label for="red">Red</label><br>
+        
+        <input type="radio" id="green" name="color" value="green">
+        <label for="green">Green</label><br>
+        
+        <input type="radio" id="blue" name="color" value="blue">
+        <label for="blue">Blue</label>
+      </fieldset>
+
+      <p id="color-display">Color Display</p>
+    </section>
+    
+    <section id="task-5">
+      <form onsubmit="validateInput()">
+        <label for="message">Enter a message:</label>
+        <input type="text" id="message" name="message">
+        <input type="submit" value="Submit">
+      </form>
+      <p id="message-display"></p>
+    </section>
+
+    <div id="number-facts"></div>
+
+    <script>
+      function createList() {
+        var ul = document.createElement('ul');
+        for (var i = 1; i <= 5; i++) {
+          var li = document.createElement('li');
+          li.textContent = 'List item ' + i;
+          ul.appendChild(li);
+        }
+        var task1Section = document.getElementById('task-1');
+        task1Section.appendChild(ul);
+      }
+
+      createList();
+
+      document.getElementById('number').addEventListener('click', function() {
+        var input = prompt('Please enter an integer value:');
+        var number = parseInt(input);
+
+        if (isNaN(number)) {
+          number = 0; 
+        }
+
+        var positivity = number > 0 ? 'positive' : number < 0 ? 'negative' : 'zero';
+        var parity = number % 2 === 0 ? 'even' : 'odd';
+
+        var numberFactsDiv = document.getElementById('number-facts');
+        numberFactsDiv.innerHTML = ''; 
+
+        var pPositivity = document.createElement('p');
+        pPositivity.textContent = 'The number ' + number + ' is ' + positivity + '.';
+        
+        var pParity = document.createElement('p');
+        pParity.textContent = 'The number ' + number + ' is ' + parity + '.';
+
+        numberFactsDiv.appendChild(pPositivity);
+        numberFactsDiv.appendChild(pParity);
+      });
+
+      function clickHandler() {
+        var outputDiv = document.getElementById('output');
+        outputDiv.innerHTML = '<h1>Clicked!</h1>';
+      }
+
+      function setColor() {
+        var radios = document.getElementsByName('color');
+        var colorDisplay = document.getElementById('color-display');
+        
+        radios.forEach(function(radio) {
+          radio.addEventListener('click', function() {
+            colorDisplay.style.color = this.value;
+          });
+        });
+      }
+
+      setColor();
+
+      function validateInput() {
+        var inputField = document.getElementById('message').value;
+
+        if (inputField.trim() === '') {
+          alert('The text field cannot be empty!');
+          return false;
+        }
+
+        return true;
+      }
+    </script>
+  </body>
+</html>
